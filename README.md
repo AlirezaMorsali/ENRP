@@ -7,6 +7,7 @@
 .. Figuring out if there are any improvement
 * Image into 16 block, and 16 smaller networks
 .. Figuring out if there are any improvement
+* Examining the frequency to see at which point we are having loss when scaling down the network
 
 
 * How does the original network perform on the blocks of image
