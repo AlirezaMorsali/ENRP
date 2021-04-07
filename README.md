@@ -39,6 +39,7 @@ Train a samll network on the resedual
 
 ## Last layer as DCT 
 Check to see if it has been done in other works
+we can do both the discrete or training the continous coeeficients
 
 ## Wavelet
 
