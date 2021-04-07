@@ -3,13 +3,13 @@
 
 ## Step 1:
 
-..* Image into 4 block, and 4 smaller networks
-...* Figuring out if there are any improvement
-..* Image into 16 block, and 16 smaller networks
-...* Figuring out if there are any improvement
+* Image into 4 block, and 4 smaller networks
+.. Figuring out if there are any improvement
+* Image into 16 block, and 16 smaller networks
+.. Figuring out if there are any improvement
 
 
-..* How does the original network perform on the blocks of image
+* How does the original network perform on the blocks of image
 
 
 ### Result:
