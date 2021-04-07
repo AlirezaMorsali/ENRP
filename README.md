@@ -19,8 +19,13 @@
 
 
 # Ideas:
+
 ## Resrnet
+
+
 ## Diferent Architecture for small parts of an image:
+
+
 ## Last layer as DCT 
 
 ## Initialilzaion
