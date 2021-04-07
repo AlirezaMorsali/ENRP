@@ -21,16 +21,13 @@
 
 # Ideas:
 
-## Resrnet
+
 
 
 ## Diferent Architecture for small parts of an image:
-
-
-## Last layer as DCT 
-
 ## Initialilzaion
 Smaller blocks may be sensitive to initialization
+## Resrnet
 
 
 ## Frequency split, parallel networks
@@ -40,7 +37,7 @@ I(x,y) = N_lf(x,y) + N_hf(x,y)
 Train grid networks on the block
 Train a samll network on the resedual 
 
-
+## Last layer as DCT 
 ## Wavelet
 
 
