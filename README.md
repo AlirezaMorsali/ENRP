@@ -1,4 +1,6 @@
 # EffNeurep
+## Original Output:
+![Original Output](images/origianl_output.jpg?raw=true "Original Model")
 
 
 ## Step 1:
