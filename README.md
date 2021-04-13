@@ -39,6 +39,59 @@ picture: 256, hidden: 64, Grid_ratio:4, Grid Total loss 0.0471402, Total Trainab
 picture: 256, hidden: 128, Grid_ratio:8, Grid Total loss 0.0350236, Total Trainable Params: 58560
 ![Original Output](./images/grid_result3.jpg?raw=true "Original Model")
 
+### Improve Tiny Siren Nets:
+#### change of omegas:
+picture: 256, hidden: 32, Total loss 0.039233, Total Trainable Params: 3363
+![Original Output](./images/original_output(3).jpg?raw=true "Original Model")
+
+picture: 256, hidden: 32, outermost_linear: False, Total loss 0.051598, Total Trainable Params: 3363
+![Original Output](./images/tiny_output.jpg?raw=true "Original Model")
+picture: 256, hidden: 32, first_omega_0:60, hidden_omega:30, Total loss 0.055761, Total Trainable Params: 3363
+![Original Output](./images/tiny_output3.jpg?raw=true "Original Model")
+picture: 256, hidden: 32, first_omega_0:30, hidden_omega:60, Total loss 0.041092, Total Trainable Params: 3363
+![Original Output](./images/tiny_output4.jpg?raw=true "Original Model")
+picture: 256, hidden: 32, first_omega_0:30, hidden_omega:120, Total loss 0.040188, Total Trainable Params: 3363
+![Original Output](./images/tiny_output5.jpg?raw=true "Original Model")
+picture: 256, hidden: 32, first_omega_0:30, hidden_omega:240, Total loss 0.043150, Total Trainable Params: 3363
+![Original Output](./images/tiny_output6.jpg?raw=true "Original Model")
+picture: 256, hidden: 32, first_omega_0:20, hidden_omega:120, Total loss 0.042351, Total Trainable Params: 3363
+![Original Output](./images/tiny_output7.jpg?raw=true "Original Model")
+picture: 256, hidden: 32, first_omega_0:10, hidden_omega:120, Total loss 0.049642, Total Trainable Params: 3363
+![Original Output](./images/tiny_output8.jpg?raw=true "Original Model")
+#### change of layers:
+picture: 256, layers:2, hidden: 40, Total loss 0.040570, Total Trainable Params: 3523
+![Original Output](./images/tiny_output9.jpg?raw=true "Original Model")
+picture: 256, layers:1, hidden: 56, Total loss 0.056993, Total Trainable Params: 3531
+![Original Output](./images/tiny_output10.jpg?raw=true "Original Model")
+picture: 256, layers:4, hidden: 28, Total loss 0.037657, Total Trainable Params: 3419
+![Original Output](./images/tiny_output11.jpg?raw=true "Original Model")
+picture: 256, layers:5, hidden: 25, Total loss 0.036021, Total Trainable Params: 3403
+![Original Output](./images/tiny_output12.jpg?raw=true "Original Model")
+picture: 256, layers:6, hidden: 23, Total loss 0.042324, Total Trainable Params: 3453
+![Original Output](./images/tiny_output13.jpg?raw=true "Original Model")
+##### change of omegas:
+picture: 256, layers:5, hidden:25, first_omega_0:30, hidden_omega:30, Total loss 0.036021, Total Trainable Params: 3403
+![Original Output](./images/tiny_output12.jpg?raw=true "Original Model")
+picture: 256, layers:5, hidden:25, first_omega_0:60, hidden_omega:30, Total loss 0.084523, Total Trainable Params: 3403
+![Original Output](./images/tiny_output14.jpg?raw=true "Original Model")
+picture: 256, layers:5, hidden:25, first_omega_0:30, hidden_omega:60, Total loss 0.033875, Total Trainable Params: 3403
+![Original Output](./images/tiny_output15.jpg?raw=true "Original Model")
+picture: 256, layers:5, hidden:25, first_omega_0:30, hidden_omega:90, Total loss 0.038705, Total Trainable Params: 3403
+![Original Output](./images/tiny_output16.jpg?raw=true "Original Model")
+picture: 256, layers:5, hidden:25, first_omega_0:20, hidden_omega:60, Total loss 0.036265, Total Trainable Params: 3403
+![Original Output](./images/tiny_output17.jpg?raw=true "Original Model")
+picture: 256, layers:5, hidden:25, first_omega_0:10, hidden_omega:60, Total loss 0.034360, Total Trainable Params: 3403
+![Original Output](./images/tiny_output18.jpg?raw=true "Original Model")
+picture: 256, layers:5, hidden:25, first_omega_0:5, hidden_omega:60, Total loss 0.044639, Total Trainable Params: 3403
+![Original Output](./images/tiny_output19.jpg?raw=true "Original Model")
+picture: 256, layers:5, hidden:25, first_omega_0:1, hidden_omega:60, Total loss 0.072873, Total Trainable Params: 3403
+![Original Output](./images/tiny_output20.jpg?raw=true "Original Model")
+picture: 256, hidden: 32, first_omega_0:300, Total loss 0.682163, Total Trainable Params: 3363
+![Original Output](./images/tiny_output1.jpg?raw=true "Original Model")
+picture: 256, hidden: 32, first_omega_0:300, hidden_omega:300, Total loss 0.957278, Total Trainable Params: 3363
+![Original Output](./images/tiny_output2.jpg?raw=true "Original Model")
+
+
 
 * Image into 4 block, and 4 smaller networks
 .. Figuring out if there are any improvement
