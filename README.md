@@ -97,6 +97,18 @@ picture: 256, gird:2, layers:5, hidden:100, first_omega_0:30, hidden_omega:60, T
 picture: 256, gird:2, layers:5, hidden:50, first_omega_0:30, hidden_omega:60, Total loss 0.001837, Total Trainable Params: 13612
 ![Original Output](./images/grid_result13.jpg?raw=true "Original Model")
 
+### Skip Connection:
+picture: 256, hidden: 128, Total loss 0.003690, Total Trainable Params: 50307
+![Original Output](./images/skip_model.jpg?raw=true "Original Model")
+#### Skip Connection with Weights:
+picture: 256, hidden: 256, Total loss 0.000167, Total Trainable Params: 199427
+![Original Output](./images/skip_model2.jpg?raw=true "Original Model")
+picture: 256, hidden: 128, Total loss 0.001049, Total Trainable Params: 50563
+![Original Output](./images/skip_model1.jpg?raw=true "Original Model")
+picture: 256, hidden: 64, Total loss 0.007480, Total Trainable Params: 12995
+![Original Output](./images/skip_model3.jpg?raw=true "Original Model")
+picture: 256, hidden: 32, Total loss 0.037725, Total Trainable Params: 3427
+![Original Output](./images/skip_model4.jpg?raw=true "Original Model")
 
 * Image into 4 block, and 4 smaller networks
 .. Figuring out if there are any improvement
