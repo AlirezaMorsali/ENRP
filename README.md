@@ -16,27 +16,27 @@ picture: 256, hidden: 32, Total loss 0.039233, Total Trainable Params: 3363
 ## Step 1: Gridding the Siren
 picture: 256, hidden: 128, Grid_ratio:2, Grid Total loss 0.0007812, Total Trainable Params: 51468
 ![Original Output](./images/grid_result1.jpg?raw=true "Original Model")
-picture: 256, hidden: 96, Grid_ratio:2, Grid Total loss 0.0020818, Total Trainable Params: 29388
+picture: 256, hidden: 96, Grid_ratio:2, Grid Total loss 0.000571, Total Trainable Params: 29388
 ![Original Output](./images/grid_result4.jpg?raw=true "Original Model")
-picture: 256, hidden: 80, Grid_ratio:2, Grid Total loss 0.0039129, Total Trainable Params: 20652
+picture: 256, hidden: 80, Grid_ratio:2, Grid Total loss 0.001055, Total Trainable Params: 20652
 ![Original Output](./images/grid_result5.jpg?raw=true "Original Model")
-picture: 256, hidden: 64, Grid_ratio:2, Grid Total loss 0.0074959, Total Trainable Params: 13452
+picture: 256, hidden: 64, Grid_ratio:2, Grid Total loss 0.001914, Total Trainable Params: 13452
 ![Original Output](./images/grid_result6.jpg?raw=true "Original Model")
-picture: 256, hidden: 56, Grid_ratio:2, Grid Total loss 0.0111716, Total Trainable Params: 10428
+picture: 256, hidden: 56, Grid_ratio:2, Grid Total loss 0.002929, Total Trainable Params: 10428
 ![Original Output](./images/grid_result7.jpg?raw=true "Original Model")
-picture: 256, hidden: 48, Grid_ratio:2, Grid Total loss 0.0170969, Total Trainable Params: 7788
+picture: 256, hidden: 48, Grid_ratio:2, Grid Total loss 0.004338, Total Trainable Params: 7788
 ![Original Output](./images/grid_result8.jpg?raw=true "Original Model")
-picture: 256, hidden: 40, Grid_ratio:2, Grid Total loss 0.0265256, Total Trainable Params: 5532
+picture: 256, hidden: 40, Grid_ratio:2, Grid Total loss 0.006983, Total Trainable Params: 5532
 ![Original Output](./images/grid_result9.jpg?raw=true "Original Model")
-picture: 256, hidden: 32, Grid_ratio:2, Grid Total loss 0.0471402, Total Trainable Params: 3660
+picture: 256, hidden: 32, Grid_ratio:2, Grid Total loss 0.011597, Total Trainable Params: 3660
 ![Original Output](./images/grid_result10.jpg?raw=true "Original Model")
 
-picture: 256, hidden: 128, Grid_ratio:4, Grid Total loss 0.0031913, Total Trainable Params: 53808
+picture: 256, hidden: 128, Grid_ratio:4, Grid Total loss 0.0002337, Total Trainable Params: 53808
 ![Original Output](./images/grid_result2.jpg?raw=true "Original Model")
-picture: 256, hidden: 64, Grid_ratio:4, Grid Total loss 0.0471402, Total Trainable Params: 14640
+picture: 256, hidden: 64, Grid_ratio:4, Grid Total loss 0.003049, Total Trainable Params: 14640
 ![Original Output](./images/grid_result11.jpg?raw=true "Original Model")
 
-picture: 256, hidden: 128, Grid_ratio:8, Grid Total loss 0.0350236, Total Trainable Params: 58560
+picture: 256, hidden: 128, Grid_ratio:8, Grid Total loss 0.000810, Total Trainable Params: 58560
 ![Original Output](./images/grid_result3.jpg?raw=true "Original Model")
 
 ### Improve Tiny Siren Nets:
@@ -92,9 +92,9 @@ picture: 256, hidden: 32, first_omega_0:300, hidden_omega:300, Total loss 0.9572
 ![Original Output](./images/tiny_output2.jpg?raw=true "Original Model")
 
 ### Grids with best omegas we found:
-picture: 256, gird:2, layers:5, hidden:100, first_omega_0:30, hidden_omega:60, Total loss 0.000732, Total Trainable Params: 52212
+picture: 256, gird:2, layers:5, hidden:100, first_omega_0:30, hidden_omega:60, Total loss 0.000187, Total Trainable Params: 52212
 ![Original Output](./images/grid_result12.jpg?raw=true "Original Model")
-picture: 256, gird:2, layers:5, hidden:50, first_omega_0:30, hidden_omega:60, Total loss 0.006655, Total Trainable Params: 13612
+picture: 256, gird:2, layers:5, hidden:50, first_omega_0:30, hidden_omega:60, Total loss 0.001837, Total Trainable Params: 13612
 ![Original Output](./images/grid_result13.jpg?raw=true "Original Model")
 
 
