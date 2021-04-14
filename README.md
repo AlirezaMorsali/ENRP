@@ -91,6 +91,11 @@ picture: 256, hidden: 32, first_omega_0:300, Total loss 0.682163, Total Trainabl
 picture: 256, hidden: 32, first_omega_0:300, hidden_omega:300, Total loss 0.957278, Total Trainable Params: 3363
 ![Original Output](./images/tiny_output2.jpg?raw=true "Original Model")
 
+### Grids with best omegas we found:
+picture: 256, gird:2, layers:5, hidden:100, first_omega_0:30, hidden_omega:60, Total loss 0.000732, Total Trainable Params: 52212
+![Original Output](./images/grid_result12.jpg?raw=true "Original Model")
+picture: 256, gird:2, layers:5, hidden:50, first_omega_0:30, hidden_omega:60, Total loss 0.006655, Total Trainable Params: 13612
+![Original Output](./images/grid_result13.jpg?raw=true "Original Model")
 
 
 * Image into 4 block, and 4 smaller networks
