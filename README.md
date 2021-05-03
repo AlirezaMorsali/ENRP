@@ -67,7 +67,8 @@ picture: 256, layers:4, hidden: 28, Total loss 0.037657, Total Trainable Params:
 ![Original Output](./images/tiny_output11.jpg?raw=true "Original Model")
 picture: 256, layers:5, hidden: 25, Total loss 0.036021, Total Trainable Params: 3403
 ![Original Output](./images/tiny_output12.jpg?raw=true "Original Model")
-picture: 256, layers:6, hidden: 23, Total loss 0.042324, Total Trainable Params: 3453
+picture: 256, layers:6, hidden: 23, Total loss 0.042324, Total Trainable Params: 3452
+
 ![Original Output](./images/tiny_output13.jpg?raw=true "Original Model")
 ##### change of omegas:
 picture: 256, layers:5, hidden:25, first_omega_0:30, hidden_omega:30, Total loss 0.036021, Total Trainable Params: 3403
