@@ -119,6 +119,16 @@ picture: 256, hidden: 32, Total loss 0.037725, Total Trainable Params: 3427
 
 
 * How does the original network perform on the blocks of image
+### Week 
+### Week 4: May 5 - 12
+* Training and getting the resutls for the section of the image
+.. for grid 4, only the first 1,1 is trained on a quarter of image, for grid 1 also a quarter of image is trained
+* Training on an image constructing on 4 images
+* Testing the new activation function 3 sines
+* Testing with other images
+* Signals with higher local information
+* Test for audio
+* Test for SDF
 
 
 ### Result:
