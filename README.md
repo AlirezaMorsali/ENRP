@@ -126,9 +126,10 @@ picture: 256, hidden: 32, Total loss 0.037725, Total Trainable Params: 3427
 * Training on an image constructing on 4 images
 * Testing the new activation function 3 sines
 * Testing with other images
+* Investigating the image preduced by each neuron
 * Signals with higher local information
-* Test for audio
-* Test for SDF
+.. Test for audio
+.. Test for SDF
 
 
 ### Result:
