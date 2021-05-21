@@ -134,7 +134,7 @@ We plotted the Loss of the model over num of parameters based on different grid_
 .. Test for audio
 .. Test for SDF
 
-### Week 5: May 21 - 30
+### Week 3 (2 left): May 21 - 30
 - [ ] Training each grid separatley
 - [ ] Additionally, train untill certain loss (comparing the epoch or time) / to see comparing for same epochs
 - [ ] Same above plot with less epochs 
