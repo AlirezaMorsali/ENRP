@@ -163,7 +163,10 @@ The models with different numOfWeights and grids where trained in 2000 iters:
 - [ ] Signals with higher local information
 * Test for audio
 * Test for SDF
-
+### Week 2 (1 left): Jun 3 - 10
+- [ ] Ali: Check the codes of OurSiren.py
+- [ ] All: Read the kiloNerf accurately
+- [ ] SDF: check current works on SDF
 
 
 ### Result:
