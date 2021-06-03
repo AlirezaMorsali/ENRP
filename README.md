@@ -136,13 +136,35 @@ We plotted the Loss of the model over num of parameters based on different grid_
 
 ### Week 3 (2 left): May 21 - 30
 - [ ] Training each grid separatley
+* Image size: 256, hidden features: 256, grid ratio: 2
+  Each block was trained and optimized independantly to 2000 step
+![Original Output](./images/seperately_trained_image_256_hidden_256_grid_2.jpg?raw=true "Plot")
+- [ ] A method to measure image complexity:
+* The complexity results-----------------------------------------------------
+![Original Output](./images/complexity_results_on_astornaut.jpg?raw=true "Plot")
+
+Then, we trained the model on base model with hf=128, and grid_model hf=[64, 64, 64, 64] and asymmetric grid model with hf=[52, 42, 70, 84]. We observed the following results:
+* The results of aggregate losses of three models:
+![Original Output](./images/plot_aggregate_loss_iters_gridded_and_base_models.jpg?raw=true "Plot")
+* The results of four grids of symmetric model:---
+![Original Output](./images/plot_loss_iters_symmetric_gridded_model.jpg?raw=true "Plot")
+* The results of four grids of Asymmetric model:
+![Original Output](./images/plot_loss_iters_asymmetric_gridded_model.jpg?raw=true "Plot")
 - [ ] Additionally, train untill certain loss (comparing the epoch or time) / to see comparing for same epochs
+* In the following results we have trained just till 0.01 loss reached and the max iter nums were 2000:
+* The plot of iters required over num of weights of models:
+![Original Output](./images/plot_iters_params_iters_to_loss_0_01.jpg?raw=true "Plot")
+
 - [ ] Same above plot with less epochs 
+The models with different numOfWeights and grids where trained in 2000 iters:
+![Original Output](./images/plot_loss_2000_params_loss.jpg?raw=true "Plot")
 - [ ] Parametric acctivation function
 - [ ] Ali: Investigating the image preduced by each neuron
 - [ ] Signals with higher local information
 * Test for audio
 * Test for SDF
+
+
 
 ### Result:
       What are the pros and cons of the Grid?
