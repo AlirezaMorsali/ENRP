@@ -168,6 +168,17 @@ The models with different numOfWeights and grids where trained in 2000 iters:
 - [ ] All: Read the kiloNerf accurately
 - [ ] SDF: check current works on SDF
 
+## Saturday Session: Jun 5
+- [ ] Arya: Backbone (shared weight)
+- [ ] Arya: Wavelet -> sum of subnetworks
+- [ ] ** Arya: range of input & Normalization
+
+- [ ] Ali: #flop should be considered
+- [ ] ** Ali: What's the trade off? what are the changes being made?
+- [ ] Ali: Different Architeture
+- [ ] Ali: SDF
+- [ ] Ali: Segmentation to grid
+
 
 ### Result:
       What are the pros and cons of the Grid?
