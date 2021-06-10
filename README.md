@@ -174,6 +174,10 @@ The models with different numOfWeights and grids where trained in 2000 iters:
 
 * Here the models were trained by 500 iterations
 ![Original Output](./images/plot_gridded_models_Iters_loss_500Iters.jpg?raw=true "Plot")
+
+* The above plots also are here based on num of flops in inference step:
+![Original Output](./images/plot_gridded_models_loss_flops_2000_Iters.jpg?raw=true "Plot")
+![Original Output](./images/plot_gridded_models_Iters_flops.jpg?raw=true "Plot")
 ## Saturday Session: Jun 5
 - [ ] Arya: Backbone (shared weight)
 - [ ] Arya: Wavelet -> sum of subnetworks
