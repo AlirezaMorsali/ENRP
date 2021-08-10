@@ -4,6 +4,8 @@ import torch.nn.functional as F
 from torch.utils.data import DataLoader, Dataset
 import torch.nn.init as init
 import os
+import time
+from prettytable import PrettyTable
 
 from PIL import Image
 from torchvision.transforms import Resize, Compose, ToTensor, Normalize
@@ -12,9 +14,22 @@ import skimage
 import matplotlib.pyplot as plt
 import math
 
-import time
 
+def count_parameters(model, shtable=False):
+    table = PrettyTable(["Modules", "Parameters"])
+    total_params = 0
+    for name, parameter in model.named_parameters():
+        if not parameter.requires_grad: continue
+        param = parameter.numel()
+        table.add_row([name, param])
+        total_params+=param
+    if shtable:
+      print(table)
+      print(f"Total Trainable Params: {total_params}")
+    return total_params
 
+# Pixels -> num of pixels of each grid * num of grids * num of output features * 1
+# Coords -> num of pixels of each grid * num of grids * num of input features * 1
 class GridDataset(Dataset):
     def __init__(self, image, sidelength=256, grid_ratio=1):
         super().__init__()
@@ -28,8 +43,8 @@ class GridDataset(Dataset):
                              Resize(sidelength),
                              ToTensor(),
                              Normalize(torch.Tensor([0.5]), torch.Tensor([0.5]))])
+        
         image = transform(image)
-        print(image.size())
         image = image.permute(1, 2, 0)
         return image
     
@@ -62,7 +77,6 @@ class GridDataset(Dataset):
     def __getitem__(self, idx):
         if idx > 0: raise IndexError
         return self.coords, self.pixels
-
 
 class SineLayer(nn.Module):
     def __init__(self, in_features, out_features, bias=True,
@@ -120,29 +134,25 @@ class Siren(nn.Module):
         output = self.net(coords)
         return output, coords
 
+# Grid Non-parallel Siren
 class GSiren(nn.Module):
     def __init__(self, in_features, hidden_features, hidden_layers, grid_ratio, out_features, outermost_linear=False, 
                  first_omega_0=30, hidden_omega_0=30.0):
         super(GSiren, self).__init__()
-        self.grid_ratio = grid_ratio
+        self.n_grids = grid_ratio**in_features
         
         self.net = nn.ModuleList([])
-        for i in range(grid_ratio):
-          for j in range(grid_ratio):
+        for i in range(self.n_grids):
             self.net.append(Siren(in_features, hidden_features, hidden_layers, out_features, outermost_linear, first_omega_0, hidden_omega_0))
 
     def forward(self, coords, i=None, j=None):
-        step = int(list(coords.size())[0]/(self.grid_ratio**2))
         output = None
-        coords_out = None
         tmpI = None
-        for i in range(self.grid_ratio):
-          for j in range(self.grid_ratio):
-            cur = i*self.grid_ratio+j
-            outputt, tmp = self.net[cur](coords[:, cur, :, :].squeeze())
+        for i in range(self.n_grids):
+            outputt, tmp = self.net[i](coords[:, i, :, :].squeeze())
             outputt = outputt.unsqueeze(dim=1)
             outputt = outputt.unsqueeze(dim=len(list(outputt.size())))
-            if i==0 and j==0:
+            if i==0:
                 tmpI = outputt
             else:
                 tmpI = torch.cat((tmpI, outputt), dim=1)
@@ -150,6 +160,10 @@ class GSiren(nn.Module):
         return output, coords
 
 
+# Weight -> num of grids * out_features * in_features
+# Input -> num of pixels * num of grids * in_features * 1
+# Weight * Input -> num of pixels * num of grids * out_features * 1
+# Bias -> num of grids * out_features * 1
 class GridLinear(torch.nn.Module):
     def __init__(self, in_features, out_features, grid_ratio=1, bias=True, device=None, dtype=None):
         super(GridLinear, self).__init__()
@@ -171,7 +185,7 @@ class GridLinear(torch.nn.Module):
             fan_in, _ = init._calculate_fan_in_and_fan_out(self.weight)
             bound = 1 / math.sqrt(fan_in) if fan_in > 0 else 0
             init.uniform_(self.bias, -bound, bound)
-        
+
     def forward(self, input: torch.Tensor) -> torch.Tensor:
         output = torch.matmul(self.weight, input)
         if not self.bias is None:
@@ -203,6 +217,7 @@ class GPSineLayer(nn.Module):
     def forward(self, input):
         return torch.sin(self.omega_0 * self.linear(input))
 
+# Grid Parallel Siren
 class GPSiren(nn.Module):
     def __init__(self, in_features, grid_hidden_features, hidden_layers, grid_ratio, out_features, outermost_linear=False, 
                  first_omega_0=30, hidden_omega_0=30.0):
@@ -239,7 +254,6 @@ class GPSiren(nn.Module):
         return output, coords
 
 
-
 def renderGridImage(gridImage):
     tmpI = None
     tmpJ = None
@@ -259,26 +273,33 @@ def renderGridImage(gridImage):
     model_output = tmpI
     fig, axes = plt.subplots(1,3, figsize=(18,6))
     axes[0].imshow(model_output.cpu().detach().numpy()*0.5+0.5)
+    plt.savefig('output.png')
     plt.show()
 
 
-def train_GPSiren(image, image_sidelength, in_features=2, hidden_features=32, grid_ratio=2, out_features=3, total_steps=500, step_til_summary=100, plot=False):
+def train_GPSiren(image, image_sidelength, in_features=2, out_features=3, grid_ratio=2, 
+                    hidden_layers=3, hidden_features=32,
+                    total_steps=500, step_til_summary=100, plot=False,
+                    cuda=True, parallel_model=True):
     total_steps = 501
     steps_til_summary = 100
 
-    img_siren = GPSiren(in_features=in_features, grid_hidden_features=hidden_features, grid_ratio=grid_ratio, out_features = out_features, 
-                    hidden_layers=3, outermost_linear=True, first_omega_0=30.0, hidden_omega_0=30.0)
+    if parallel_model:
+        img_siren = GPSiren(in_features=in_features, grid_hidden_features=hidden_features, grid_ratio=grid_ratio, out_features = out_features, 
+                        hidden_layers=3, outermost_linear=True, first_omega_0=30.0, hidden_omega_0=30.0)
+    else:
+        img_siren = GSiren(in_features=in_features, out_features=out_features, hidden_features=hidden_features, grid_ratio=grid_ratio, 
+                        hidden_layers=3, outermost_linear=True, first_omega_0=30.0, hidden_omega_0=30.0)
 
-    # img_siren = GSiren(in_features=in_features, out_features=out_features, hidden_features=hidden_features, grid_ratio=grid_ratio, 
-    #                 hidden_layers=3, outermost_linear=True, first_omega_0=30.0, hidden_omega_0=30.0)
-
-    img_siren.cuda()
     optim = torch.optim.Adam(lr=1e-4, params=img_siren.parameters())
     n_params = count_parameters(img_siren, shtable=False)
 
     dataloader = GridDataset(image, sidelength=image_sidelength, grid_ratio=grid_ratio)
     model_input, ground_truth = next(iter(dataloader))
-    model_input, ground_truth = model_input.cuda(), ground_truth.cuda()
+    
+    if cuda:
+        img_siren.cuda()
+        model_input, ground_truth = model_input.cuda(), ground_truth.cuda()
 
     losses = []
     totalTime = 0
@@ -305,4 +326,4 @@ def train_GPSiren(image, image_sidelength, in_features=2, hidden_features=32, gr
     return {'losses':losses, 'n_params':n_params, 'time':totalTime}
 
 image = skimage.data.astronaut()
-result = train_GPSiren(image=image, image_sidelength=256, hidden_features=16, grid_ratio=16)
+result = train_GPSiren(image=image, image_sidelength=256, hidden_features=32, grid_ratio=4, total_steps=501, step_til_summary=100, plot=True)
