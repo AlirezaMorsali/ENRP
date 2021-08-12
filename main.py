@@ -31,9 +31,10 @@ def count_parameters(model, shtable=False):
 # Pixels -> num of pixels of each grid * num of grids * num of output features * 1
 # Coords -> num of pixels of each grid * num of grids * num of input features * 1
 class GridDataset(Dataset):
-    def __init__(self, image, sidelength=256, grid_ratio=1):
+    def __init__(self, image, sidelength=[256, 256], grid_ratio=1):
         super().__init__()
         image = self.preprocessImage(image, sidelength)
+        print(type(image), image.size())
         self.pixels = self.gridImage(image, grid_ratio)
         self.coords = self.getMgrid(sidelength, grid_ratio)
         
@@ -49,23 +50,27 @@ class GridDataset(Dataset):
         return image
     
     def gridImage(self, image, grid_ratio):
-        sidelength = list(image.size())[0]
+        sidelength1 = list(image.size())[0]
+        sidelength2 = list(image.size())[1]
         depth = list(image.size())[-1]
-        step = int(sidelength/grid_ratio)
+        step1 = int(sidelength1/grid_ratio)
+        step2 = int(sidelength2/grid_ratio)
 
         gridImage = None
         for i in range(grid_ratio):
             for j in range(grid_ratio):
                 if i==0 and j==0:
-                    grid_image = image[i*step:(i+1)*step, j*step:(j+1)*step].reshape((-1, 1, depth))
+                    grid_image = image[i*step1:(i+1)*step1, j*step2:(j+1)*step2].reshape((-1, 1, depth))
                 else:
-                    grid_image = torch.cat((grid_image, image[i*step:(i+1)*step, j*step:(j+1)*step].reshape((-1, 1, depth))), dim=1)
+                    grid_image = torch.cat((grid_image, image[i*step1:(i+1)*step1, j*step2:(j+1)*step2].reshape((-1, 1, depth))), dim=1)
         grid_image = torch.unsqueeze(grid_image, dim=len(list(grid_image.size())))
         return grid_image
     
     def getMgrid(self, sidelength, grid_ratio=1, dim=2):
-        gridlength = int(sidelength/grid_ratio)
-        tensors = tuple(dim * [torch.linspace(-1, 1, steps=gridlength)])
+        gridlength1 = int(sidelength[0]/grid_ratio)
+        gridlength2 = int(sidelength[1]/grid_ratio)
+        tensors = tuple([torch.linspace(-1, 1, steps=gridlength1), torch.linspace(-1, 1, steps=gridlength2)])
+        # tensors = tuple(dim * [torch.linspace(-1, 1, steps=gridlength)])
         mgrid = torch.stack(torch.meshgrid(*tensors), dim=-1)
         mgrid = mgrid.reshape(-1, 1, dim).repeat(1, grid_ratio**dim, 1)
         mgrid = torch.unsqueeze(mgrid, dim=len(list(mgrid.size())))
@@ -254,18 +259,19 @@ class GPSiren(nn.Module):
         return output, coords
 
 
-def renderGridImage(gridImage):
+def renderGridImage(gridImage, image_size=[256, 256]):
     tmpI = None
     tmpJ = None
     grid_ratio = int(math.sqrt(list(gridImage.size())[1]))
     grid_size = int(math.sqrt(list(gridImage.size())[0]))
+    
     for i in range(grid_ratio):
         for j in range(grid_ratio):
             cur = i*grid_ratio + j
             if j==0:
-                tmpJ = gridImage[:, cur, :, :].reshape(grid_size, grid_size, 3)
+                tmpJ = gridImage[:, cur, :, :].reshape(int(image_size[0]/grid_ratio), int(image_size[1]/grid_ratio), 3)
             else:
-                tmpJ = torch.hstack((tmpJ, gridImage[:, cur, :, :].reshape(grid_size, grid_size, 3)))
+                tmpJ = torch.hstack((tmpJ, gridImage[:, cur, :, :].reshape(int(image_size[0]/grid_ratio), int(image_size[1]/grid_ratio), 3)))
         if i==0:
             tmpI = tmpJ
         else:
@@ -277,7 +283,7 @@ def renderGridImage(gridImage):
     plt.show()
 
 
-def train_GPSiren(image, image_sidelength, in_features=2, out_features=3, grid_ratio=2, 
+def train_GPSiren(image, image_sidelength=[256, 256], in_features=2, out_features=3, grid_ratio=2, 
                     hidden_layers=3, hidden_features=32,
                     total_steps=500, step_til_summary=100, plot=False,
                     cuda=True, parallel_model=True):
@@ -320,10 +326,13 @@ def train_GPSiren(image, image_sidelength, in_features=2, out_features=3, grid_r
         if step_til_summary != 0 and not step % steps_til_summary:
             print("Step %d, Total loss %0.6f" % (step, loss))
             if plot:
-                renderGridImage(model_output)
+                renderGridImage(model_output, image_size=image_sidelength)
         losses.append(loss.cpu().detach().numpy())
 
     return {'losses':losses, 'n_params':n_params, 'time':totalTime}
 
-image = skimage.data.astronaut()
-result = train_GPSiren(image=image, image_sidelength=256, hidden_features=32, grid_ratio=4, total_steps=501, step_til_summary=100, plot=True)
+
+# image = skimage.data.astronaut()
+image = plt.imread('Image1.jpg')
+
+result = train_GPSiren(image=image, image_sidelength=[256, 384], hidden_features=32, grid_ratio=4, total_steps=501, step_til_summary=100, plot=True)
