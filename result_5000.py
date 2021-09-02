@@ -18,11 +18,23 @@ for i in ['grid_1', 'grid_2', 'grid_4', 'grid_8', 'grid_16', 'grid_32', 'grid_64
     # j = 0
     # while j<len(paramss[i]) and paramss[i][j] <= 8e5:
     #     j += 1
+    # if i == 'grid_64':
+    #     plt.plot(paramss[i][:-1], 20 * np.log10(PIXEL_MAX / np.sqrt(minLoss[i][:-1])), label=i)
+    # else:
+    #     plt.plot(paramss[i], 20 * np.log10(PIXEL_MAX / np.sqrt(minLoss[i])), label=i)
+
+    # if i == 'grid_64':
+    #     plt.plot(paramss[i][:-1], 20 * np.log10(PIXEL_MAX / np.sqrt(minLoss[i][:-1])), label=i)
+    # else:
+    #     plt.plot(paramss[i], 20 * np.log10(PIXEL_MAX / np.sqrt(minLoss[i])), label=i)
+
     if i == 'grid_64':
-        plt.plot(paramss[i][:-1], 20 * np.log10(PIXEL_MAX / np.sqrt(minLoss[i][:-1])), label=i)
+        plt.plot(paramss[i][:-1], reportIter[i][:-1], label=i)
     else:
-        plt.plot(paramss[i], 20 * np.log10(PIXEL_MAX / np.sqrt(minLoss[i])), label=i)
+        plt.plot(paramss[i], reportIter[i], label=i)
 plt.xlabel('#Weights')
-plt.ylabel('PSNR')
+# plt.ylim(0, 2000)
+# plt.ylabel('PSNR')
+plt.ylabel('#Iters')
 plt.legend()
-plt.savefig('out_5000.jpg')
+plt.savefig('iter_5000.eps')
