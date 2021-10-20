@@ -22,7 +22,7 @@ if  os.path.split(args.output)[0] != '':
     os.makedirs(os.path.split(args.output)[0] , exist_ok = True)
 
 
-add = os.path.split(args.output)
+add = os.path.split(args.output)[0]
 
 resol = [128]
 
