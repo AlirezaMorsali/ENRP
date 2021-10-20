@@ -1,11 +1,10 @@
 from utils import *
 import os
 import cv2
-import matplotlib.pyplot as plt
 from argparse import ArgumentParser
 
 parser = ArgumentParser()
-parser.add_argument('--input', type=str, default='Image1.jpg', help = 'The input image')
+parser.add_argument('--input', type=str, default='train_images/Image1.jpg', help = 'The input image')
 parser.add_argument('--output', type=str, default='out.csv', help = 'The output file')
 parser.add_argument('--parallel', action = 'store_true' , help =  'is set, uses the parallel method')
 parser.add_argument('--n_steps', type = int , default= 5001 , help = 'Sets the maximum number of training steps')
