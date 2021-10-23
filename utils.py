@@ -269,7 +269,7 @@ def renderGridImage(gridImage, image_size=[256, 256]):
 def train_GPSiren(image, image_sidelength=[256, 256], in_features=2, out_features=3, grid_ratio=2, 
                     hidden_layers=3, hidden_features=32, total_steps=500,
                     summary_plot=False, steps_til_summary=100, store_images=False, save_frame_rate = 5,
-                    cuda=True, parallel_model=True, n_batches=1, save_model = False, checkpoints_dir = './output_model'):
+                    cuda=True, parallel_model=True, n_batches=1, save_model = False, checkpoints_dir = './output'):
 
     if parallel_model:
         img_siren = GPSiren(in_features=in_features, grid_hidden_features=hidden_features, grid_ratio=grid_ratio, out_features = out_features, 
