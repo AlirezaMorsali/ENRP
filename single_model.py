@@ -23,7 +23,7 @@ image= cv2.imread(name)
 print(args.parallel)
 
 
-if args.gird > 2:
+if args.grid > 2:
     parallel = args.parallel
 else:
     parallel = False
