@@ -9,8 +9,8 @@ parser.add_argument('--depth', type=int, default=2, help = 'hidden layers')
 parser.add_argument('--width', type=int, default=64, help = 'hidden features')
 parser.add_argument('--sidelength', type=int, default=128, help = 'image sidelength')
 
-parser.add_argument('--parallel', action = 'store_true' , help =  'is set, uses the parallel method')
-parser.add_argument('--n_steps', type = int , default= 5001 , help = 'Sets the maximum number of training steps')
+parser.add_argument('--parallel', default=True, help =  'is set, uses the parallel method')
+parser.add_argument('--n_steps', type = int , default= 500 , help = 'Sets the maximum number of training steps')
 parser.add_argument('--batch_size', type = int , default= 8 , help = 'Batch size')
 parser.add_argument('--save_model', default=True, help="saves output model")
 
@@ -32,9 +32,7 @@ out = {}
 result = train_GPSiren(image=image, image_sidelength=[args.sidelength, args.sidelength], hidden_features = args.width,
                         hidden_layers=args.depth, grid_ratio=args.grid, total_steps=args.n_steps, summary_plot=False,
                         steps_til_summary=100, n_batches= args.batch_size , parallel_model = parallel, save_model=args.save_model)  
-
-if args.save_model:
-    print("Model Saved!")
+  
 
 flops, log_flops, params = flops_counter(hidden_features = args.width , hidden_layers = args.depth,
                                             image_size = args.sidelength, grid_size=args.grid)
@@ -43,12 +41,10 @@ out['resolution'] = args.sidelength
 out['width'] = args.width
 out['PSNR'] = 20*np.log10(1.0/np.sqrt(np.min(result['losses'])))
 out['Flops'] = flops
-out['LOG(FLP)'] = log_flops
+out['LOG(FLOPs)'] = log_flops
 out['params'] = params
 out['depth'] = args.depth
 out['Min_Loss'] = np.min(result['losses'])
 out['n_batches']= args.batch_size
 
 print(out)
-
-

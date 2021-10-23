@@ -13,6 +13,7 @@ from ptflops import get_model_complexity_info
 import os
 import cv2
 
+
 class SineLayer(nn.Module):
     def __init__(self, in_features, out_features, bias=True,
                  is_first=False, omega_0=30):
@@ -327,7 +328,7 @@ def train_GPSiren(image, image_sidelength=[256, 256], in_features=2, out_feature
 
         if summary_plot:
             if step % steps_til_summary ==0:
-                print("Step %d, Total loss %0.6f Total Time %0.6f" % (step, totalLoss, totalTime))
+                print("Step %d, Total loss %0.6f, Total Time %0.6f" % (step, totalLoss, totalTime))
 
         if store_images and (step % save_frame_rate == 0):
             out_f = renderGridImage(torch.cat(model_outputs, dim=0), image_size=image_sidelength)
@@ -341,10 +342,14 @@ def train_GPSiren(image, image_sidelength=[256, 256], in_features=2, out_feature
     if save_model:
         os.makedirs(checkpoints_dir, exist_ok=True)
         torch.save(img_siren.state_dict(),
-        os.path.join(checkpoints_dir, 'model_final_G{grid_ratio}_L{hidden_layers}_H{hidden_features}.pth'))
-        
+        os.path.join(checkpoints_dir, f'model_final_G{grid_ratio}_L{hidden_layers}_H{hidden_features}.pth'))
+
         # Save output img
-        cv2.imwrite(os.path.join(checkpoints_dir, 'img_G{grid_ratio}_L{hidden_layers}_H{hidden_features}.png'),out_f)
+        out_f = renderGridImage(torch.cat(model_outputs, dim=0), image_size=image_sidelength)
+        out_f = (out_f*255).astype('uint8')[...,::-1]
+        cv2.imwrite(os.path.join(checkpoints_dir, f'img_G{grid_ratio}_L{hidden_layers}_H{hidden_features}.png'),out_f)
+        
+        print("Model and Output image are saved!")
 
     return {'losses':losses, 'time':totalTime, 'images': output_images}
 
@@ -354,22 +359,22 @@ def train_GPSiren(image, image_sidelength=[256, 256], in_features=2, out_feature
 def flops_to_string(flops, units=None, precision=2):
     if units is None:
         if flops // 10**9 > 0:
-            return str(round(flops / 10.**9, precision)) + ' GMac'
+            return str(round(flops / 10.**9, precision)) + ' GFLOPs'
         elif flops // 10**6 > 0:
-            return str(round(flops / 10.**6, precision)) + ' MMac'
+            return str(round(flops / 10.**6, precision)) + ' MFLOPs'
         elif flops // 10**3 > 0:
-            return str(round(flops / 10.**3, precision)) + ' KMac'
+            return str(round(flops / 10.**3, precision)) + ' KFLOPs'
         else:
-            return str(flops) + ' Mac'
+            return str(flops) + ' FLOPs'
     else:
-        if units == 'GMac':
+        if units == 'GFLOPs':
             return str(round(flops / 10.**9, precision)) + ' ' + units
-        elif units == 'MMac':
+        elif units == 'MFLOPs':
             return str(round(flops / 10.**6, precision)) + ' ' + units
-        elif units == 'KMac':
+        elif units == 'KFLOPs':
             return str(round(flops / 10.**3, precision)) + ' ' + units
         else:
-            return str(flops) + ' Mac'
+            return str(flops) + ' FLOPs'
 
 
 def params_to_string(params_num, units=None, precision=2):

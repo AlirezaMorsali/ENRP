@@ -8,9 +8,9 @@ import pandas as pd
 parser = ArgumentParser()
 parser.add_argument('--input', type=str, default='train_images/Image.jpg', help = 'The input image')
 parser.add_argument('--output', type=str, default='out.csv', help = 'The output file')
-parser.add_argument('--parallel', action = 'store_true' , help =  'is set, uses the parallel method')
+parser.add_argument('--parallel', default=True, help =  'is set, uses the parallel method')
 parser.add_argument('--n_steps', type = int , default= 5001 , help = 'Sets the maximum number of training steps')
-parser.add_argument('--batch_size', type = int , default= 8 , help = 'Batch size')
+parser.add_argument('--batch_size', type = int , default= 16 , help = 'Batch size')
 
 args = parser.parse_args()
 
@@ -59,8 +59,8 @@ for hid, grid in tqdm(zip(hidden, grids)):
             out['resolution'] = res
             out['hidden'] = hid
             out['PSNR'] = 20*np.log10(1.0/np.sqrt(np.min(result['losses'])))
-            out['Flops'] = flops
-            out['LOG(FLP)'] = log_flops
+            out['FLOPs'] = flops
+            out['LOG(FLOPs)'] = log_flops
             out['params'] = params
             out['Layer'] = layer
             out['Min_Loss'] = np.min(result['losses'])
