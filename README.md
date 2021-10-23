@@ -21,6 +21,7 @@ Implicit Neural Representation (INR) has recently attracted considerable attenti
 ## Outputs
 https://user-images.githubusercontent.com/61879630/138573602-7d80571e-ec47-4d13-8cfc-8ba881c137db.mp4
 
+Results for 500 training steps.
 <!-- ![divergence](https://user-images.githubusercontent.com/44018277/138134131-a5acd014-6397-43ab-8366-c2c8829aa509.jpg)
  -->
 ## Training
