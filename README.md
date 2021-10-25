@@ -1,5 +1,5 @@
 # Ensemble Neural Representation Networks
-[![Explore Siren in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AlirezaMorsali/ENRP/blob/master/ENRP_Demo.ipynb)<br>
+[![Explore Siren in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AlirezaMorsali/ENRP/blob/main/ENRP_Demo.ipynb)<br>
 
 [Milad Soltany Kadarvish](https://miladsoltany.github.io/)\*,
 [Hesam Mojtahedi](https://scholar.google.com/citations?user=Kr2UwU0AAAAJ&hl=en/)\*,
